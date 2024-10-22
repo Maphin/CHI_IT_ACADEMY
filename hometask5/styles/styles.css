@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+}
+#content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .character {
+    border: 1px solid black;
+    margin: 10px;
+    text-align: center;
+    padding: 20px;
+    width: 300px;
+  }
+  
+  .character img {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .character-name {
+    margin-top: 5px;
+    font-weight: bold;
+  }
+  
+  .character-status {
+    margin-top: 2px;
+    color: grey;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .btn {
+    width: 70px;
+  }
+  
+  .actions #currentPage {
+    margin: 0 10px 0 10px;
+  }
