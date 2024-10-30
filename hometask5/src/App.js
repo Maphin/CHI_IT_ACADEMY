@@ -44,7 +44,6 @@ const App = () => {
             fetchCharacters(prevPageUrl);
         }
     }
-
     const handleNextPage = () => {
         if (nextPageUrl) {
             fetchCharacters(nextPageUrl);
