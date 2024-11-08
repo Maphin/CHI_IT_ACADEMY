@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { IExhibit } from '../types/IExhibit';
 import { useRequest } from 'ahooks';
-import { Box, CircularProgress, Typography, Container } from '@mui/material';
+import { CircularProgress, Typography, Container } from '@mui/material';
 import Post from '../components/Posts/Post';
-import Paginator from '../components/common/Paginator';
+import { useSearchParams } from 'react-router-dom';
+import PaginatorWrapper from './common/PaginatorWrapper';
 
 interface FeedProps {
   fetchExhibits: (page: number, limit: number) => Promise<IExhibit[] | any>;
 }
 
 const Feed: React.FC<FeedProps> = ({ fetchExhibits }) => {
-  const [page, setPage] = useState<number>(1);
-  const [exhibits, setExhibits] = useState<IExhibit[] | null>(null);
-  const [lastPage, setLastPage] = useState<number | null>(null);
-  //const [total, setTotal] = useState<number | null>(null);
-  const limit = 10;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [exhibits, setExhibits] = useState<IExhibit[]>([]);
+  const [lastPage, setLastPage] = useState<number>(1);
+
+  const page = parseInt(searchParams.get('page') || '1', 10);
+  const limit = parseInt(searchParams.get('limit') || '10', 10);
 
   const { run: loadExhibits, loading, error } = useRequest(() => fetchExhibits(page, limit), {
     refreshDeps: [page],
@@ -25,40 +27,36 @@ const Feed: React.FC<FeedProps> = ({ fetchExhibits }) => {
   });
 
   const handlePageChange = (_event: React.ChangeEvent<unknown>, newPage: number) => {
-    setPage(newPage);
+    setSearchParams({ page: newPage.toString(), limit: limit.toString() });
   };
+
+  const renderMessage = (message: string) => (
+    <Typography color="textSecondary" align="center">
+      {message}
+    </Typography>
+  );
 
   return (
     <Container sx={{ py: 8 }}>
-      {exhibits && lastPage ? (
-        <Box mb={6} display="flex" justifyContent="center">
-          <Paginator page={page} lastPage={lastPage} handlePageChange={handlePageChange}/>
-        </Box>
-      ) : null}
-
-      {loading && <CircularProgress sx={{ display: 'block', mx: 'auto' }} />}
-
-      {error && (
-        <Typography color="error" align="center">
-          Failed to load exhibits. Please try again.
-        </Typography>
+      {lastPage > 1 && (
+        <PaginatorWrapper page={page} lastPage={lastPage} onChange={handlePageChange} />
       )}
 
-      {!loading && exhibits && exhibits.length === 0 && (
-        <Typography color="textSecondary" align="center">
-          No exhibits found.
-        </Typography>
+      {loading ? (
+        <CircularProgress sx={{ display: 'block', mx: 'auto' }} />
+      ) : error ? (
+        renderMessage('Failed to load exhibits. Please try again.')
+      ) : exhibits.length === 0 ? (
+        renderMessage('No exhibits found.')
+      ) : (
+        exhibits.map((exhibit) => (
+          <Post key={exhibit.id} exhibit={exhibit} loadExhibits={loadExhibits} />
+        ))
       )}
 
-      {exhibits && exhibits.map((exhibit: IExhibit) => (
-          <Post key={exhibit.id} exhibit={exhibit} loadExhibits={loadExhibits}/>
-      ))}
-
-      {exhibits && lastPage ? (
-        <Box mt={6} display="flex" justifyContent="center">
-          <Paginator page={page} lastPage={lastPage} handlePageChange={handlePageChange}/>
-        </Box>
-      ) : null}
+      {lastPage > 1 && (
+        <PaginatorWrapper page={page} lastPage={lastPage} onChange={handlePageChange} />
+      )}
     </Container>
   );
 };
