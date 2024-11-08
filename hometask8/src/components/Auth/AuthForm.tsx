@@ -12,9 +12,6 @@ import {
 } from '@mui/material';
 import Grid2 from '@mui/material/Grid2';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-
-const theme = createTheme();
 
 interface AuthFormProps {
   title: string;
@@ -34,7 +31,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ title, buttonText, onSubmit, loadin
     };
 
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -84,7 +80,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ title, buttonText, onSubmit, loadin
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 };
 
