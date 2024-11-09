@@ -20,18 +20,22 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<FeedPage />}/>
           <Route path="/login" element={
-            //<ProtectedRoute  >
+            <ProtectedRoute userStatus={userAuthStatus} access={"loggedOutOnly"}>
               <LoginPage />
-            //</ProtectedRoute>
+            </ProtectedRoute>
           } />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/register" element={
+            <ProtectedRoute userStatus={userAuthStatus} access={"loggedOutOnly"}>
+              <RegisterPage />
+            </ProtectedRoute>
+          } />
           <Route path="/my-posts" element={
-            <ProtectedRoute isAllowed={userAuthStatus}>
+            <ProtectedRoute userStatus={userAuthStatus} access={"loggedInOnly"}>
               <MyPostsPage />
             </ProtectedRoute>
           } />
           <Route path="/create-post" element={
-            <ProtectedRoute isAllowed={userAuthStatus}>
+            <ProtectedRoute userStatus={userAuthStatus} access={"loggedInOnly"}>
               <CreatePostPage />
             </ProtectedRoute>
           } />
