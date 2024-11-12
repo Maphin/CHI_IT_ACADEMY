@@ -5,7 +5,7 @@ import Exhibit from "./Exhibit";
 import Message from "../common/Message";
 
 interface ExhibitsProps {
-    loading: boolean; 
+    loading?: boolean | null; 
     error: any; 
     exhibits: IExhibit[]; 
     onReload: () => void

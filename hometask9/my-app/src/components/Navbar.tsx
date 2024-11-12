@@ -97,8 +97,12 @@ const Navbar: React.FC = () => {
           onClose={handleMenuClose}
           sx={{ display: { xs: 'block', sm: 'none' } }}
         >
-          <MenuItem onClick={() => handleNavigation('/my-posts')}>My Posts</MenuItem>
-          <MenuItem onClick={() => handleNavigation('/create-post')}>Create Post</MenuItem>
+          {isAuthenticated && (
+            <Box>
+              <MenuItem onClick={() => handleNavigation('/my-posts')}>My Posts</MenuItem>
+              <MenuItem onClick={() => handleNavigation('/create-post')}>Create Post</MenuItem>
+            </Box>
+          )}
           <MenuItem onClick={() => handleAuthentication()}>{isAuthenticated ? 'Logout' : 'Login'}</MenuItem>
         </Menu>
       </Toolbar>

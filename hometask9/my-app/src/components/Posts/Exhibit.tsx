@@ -17,7 +17,7 @@ import CommentList from "../Comments/CommentList";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { ExhibitsAPI } from "../../api/exhibitsAPI";
-import AvatarHeader from "./AvatarHeader";
+import AvatarHeader from "../common/AvatarHeader";
 import ActionsBar from "./ActionsBar";
 
 interface ExhibitProps {
@@ -59,7 +59,7 @@ const Exhibit: React.FC<ExhibitProps> = ({ exhibit, loadExhibits }) => {
 
   return (
     <Card key={exhibit.id} sx={{ boxShadow: 3, maxWidth: 800, display: 'block', mx: 'auto', mb: 3 }}>
-      <AvatarHeader username={exhibit.user.username} createdAt={exhibit.createdAt}/>
+      <AvatarHeader username={exhibit.user.username} createdAt={exhibit.createdAt} />
       
       <CardMedia
         component="img"

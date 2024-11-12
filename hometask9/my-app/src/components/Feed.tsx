@@ -4,7 +4,7 @@ import { useRequest } from 'ahooks';
 import { Container } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import PaginatorWrapper from './common/PaginatorWrapper';
-import useSocket from '../hooks/useSocket';
+import { useSocket } from '../hooks/useSocket';
 import useToast from '../hooks/useToast';
 import Exhibits from './Posts/Exhibits';
 
@@ -45,7 +45,7 @@ const Feed: React.FC<FeedProps> = ({ fetchExhibits, showToaster }) => {
     },
     [limit, setSearchParams]
   );
-  
+
   function handleExhibitResponse(response: any) {
     setExhibits(response.data.data);
     setLastPage(response.data.lastPage);
@@ -54,7 +54,7 @@ const Feed: React.FC<FeedProps> = ({ fetchExhibits, showToaster }) => {
   return (
     <Container sx={{ py: 8 }}>
       <PaginatorWrapper page={page} lastPage={lastPage} onChange={handlePageChange} />
-      <Exhibits loading={loading} error={error} exhibits={exhibits} onReload={loadExhibits}/>
+      <Exhibits loading={!showToaster ? loading : null} error={error} exhibits={exhibits} onReload={loadExhibits}/>
       <PaginatorWrapper page={page} lastPage={lastPage} onChange={handlePageChange} />
     </Container>
   );

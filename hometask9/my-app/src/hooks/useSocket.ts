@@ -4,7 +4,7 @@ import { INotificationNewPost } from '../types/INotificationNewPost';
 
 const SOCKET_SERVER_URL = process.env.REACT_APP_API_BASE_URL + 'notifications';
 
-const useSocket = () => {
+export const useSocket = () => {
   const [newPostData, setNewPostData] = useState<INotificationNewPost | null>(null);
   const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -30,5 +30,3 @@ const useSocket = () => {
   
   return { newPostData, socket };
 };
-
-export default useSocket;
