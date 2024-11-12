@@ -30,6 +30,7 @@ const Exhibit: React.FC<ExhibitProps> = ({ exhibit, loadExhibits }) => {
   const [expanded, setExpanded] = useState(false);
   const [showAddComment, setShowAddComment] = useState<boolean>(false);
   const userId = useSelector((state: RootState) => state.user.user?.id);
+  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
 
   const { run: loadComments, loading: commentsLoading, error } = useRequest(
     () => CommentsAPI.comments(exhibit.id),
@@ -103,7 +104,7 @@ const Exhibit: React.FC<ExhibitProps> = ({ exhibit, loadExhibits }) => {
           <CommentList comments={comments} onCommentDelete={loadComments}/>
         </Collapse>
 
-        {showAddComment && <AddCommentForm exhibitID={exhibit.id} onSuccess={onCommentAdd} />}
+        {showAddComment && <AddCommentForm exhibitID={exhibit.id} onSuccess={onCommentAdd} isAuthenticated={isAuthenticated}/>}
       </CardContent>
     </Card>
   );

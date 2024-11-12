@@ -3,14 +3,17 @@ import { useRequest } from "ahooks";
 import React, { useState } from "react";
 import { CommentsAPI } from "../../api/commentsAPI";
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import { useNavigate } from "react-router-dom";
 
 interface AddCommentFormProps {
     exhibitID: number;
     onSuccess: () => void;
+    isAuthenticated: boolean;
   }
 
-const AddCommentForm: React.FC<AddCommentFormProps> = ({ exhibitID, onSuccess }) => {
+const AddCommentForm: React.FC<AddCommentFormProps> = ({ exhibitID, onSuccess, isAuthenticated }) => {
     const [newComment, setNewComment] = useState<string>("");
+    const navigate = useNavigate();
 
     const { run: addComment, loading: addingComment } = useRequest(
         async () => await CommentsAPI.createComment(exhibitID, newComment),
@@ -27,6 +30,10 @@ const AddCommentForm: React.FC<AddCommentFormProps> = ({ exhibitID, onSuccess })
     );
 
     const handleSubmit = () => {
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
         if (newComment.trim()) addComment();
     }
 
