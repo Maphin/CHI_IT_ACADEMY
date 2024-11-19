@@ -1,7 +1,7 @@
 import path from "path";
 import { Get, Post, Patch, Body, JsonController, Param, Delete } from "routing-controllers";
 import { readUsersFromFile, writeUsersToFile } from "../utils/fileUtils";
-import { ValidateArgs, ValidateNoExtraFields } from "../decorators/validator";
+import { ValidateArgs } from "../decorators/validator";
 import { User } from "../interfaces/decorated/User";
 import { UserDto } from "../interfaces/decorated/UserDto";
 
@@ -15,8 +15,7 @@ export class UserController {
     }
 
     @Post()
-    //@ValidateArgs('User validation error')
-    @ValidateNoExtraFields(UserDto)
+    @ValidateArgs(UserDto)
     create(@Body() userDto: Pick<User, "user" | "email">) {
         const users = readUsersFromFile(outputFilePath);
         const newUser = { id: Date.now(), ...userDto };
@@ -26,8 +25,7 @@ export class UserController {
     }
 
     @Patch('/:id')
-    //@ValidateArgs('User validation error')
-    @ValidateNoExtraFields(UserDto)
+    @ValidateArgs(UserDto)
     update(@Param('id') id: number, @Body() userDto: Pick<User, "user" | "email">) {
         const users = readUsersFromFile(outputFilePath);
         const userIndex = users.findIndex(user => user.id === id);
