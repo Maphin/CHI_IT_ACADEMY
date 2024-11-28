@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString, MaxLength } from "class-validator";
 
 export class CreateExhibitDto {
     @ApiProperty({ description: 'The image file for the exhibit', type: 'string', format: 'binary' })
-    readonly image: File;
+    readonly image: Express.Multer.File;
 
     @ApiProperty({ description: 'Description of the exhibit', example: 'This is a beautiful painting from the 19th century' })
     @IsString()
