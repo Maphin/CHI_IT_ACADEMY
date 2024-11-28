@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { User } from './users/users.entity';
 import { Exhibit } from './exhibits/exhibits.entity';
+import { Comment } from './comments/comments.entity';
 
 export default new DataSource({
     type: 'postgres',
@@ -11,6 +12,6 @@ export default new DataSource({
     password: 'davidpostgres123!',
     database: 'museum_db',
     synchronize: false,
-    entities: [User, Exhibit],
+    entities: [User, Exhibit, Comment],
     migrations: ["src/migrations/**/*"],
 })

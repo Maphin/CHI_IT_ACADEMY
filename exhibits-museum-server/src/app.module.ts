@@ -7,6 +7,9 @@ import { User } from './users/users.entity';
 import { AuthModule } from './auth/auth.module';
 import { ExhibitsModule } from './exhibits/exhibits.module';
 import { Exhibit } from './exhibits/exhibits.entity';
+import { FileModule } from './file/file.module';
+import { CommentsModule } from './comments/comments.module';
+import { Comment } from './comments/comments.entity';
 
 @Module({
   imports: [
@@ -21,12 +24,14 @@ import { Exhibit } from './exhibits/exhibits.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Exhibit],
+      entities: [User, Exhibit, Comment],
       synchronize: false
     }), 
     UsersModule, 
     AuthModule, 
-    ExhibitsModule,
+    ExhibitsModule, 
+    FileModule, 
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [],
