@@ -1,9 +1,10 @@
 import { Module, forwardRef } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users.entity';
 import { AuthModule } from 'src/auth/auth.module';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { AuthModule } from 'src/auth/auth.module';
     forwardRef(() => AuthModule),
   ],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService, JwtAuthGuard],
   exports: [UsersService]
 })
 export class UsersModule {}
