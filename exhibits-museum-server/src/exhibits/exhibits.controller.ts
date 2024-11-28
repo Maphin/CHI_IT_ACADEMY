@@ -35,7 +35,7 @@ export class ExhibitsController {
         @Body() exhibitDto: CreateExhibitDto,
         @Req() req
     ) {
-        return await this.exhibitsService.create(file, exhibitDto.description, req.user.id); 
+        return await this.exhibitsService.create(file, exhibitDto.description, req.user); 
     }
 
     @Get()

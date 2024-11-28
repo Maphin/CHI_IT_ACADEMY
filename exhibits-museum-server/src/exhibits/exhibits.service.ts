@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { User } from 'src/users/users.entity';
 import * as path from 'path';
 import { FileService } from 'src/file/file.service';
+import { NotificationsGateway } from '../notifications/notifications.gateway';
 
 @Injectable()
 export class ExhibitsService {
@@ -12,9 +13,10 @@ export class ExhibitsService {
         @InjectRepository(Exhibit)
         private readonly exhibitsRepository: Repository<Exhibit>,
         private readonly fileService: FileService,
+        private readonly notificationService: NotificationsGateway
     ) {}
 
-    async create(file: Express.Multer.File, description: string, userId: number): Promise<Exhibit> {
+    async create(file: Express.Multer.File, description: string, user: User): Promise<Exhibit> {
         if (!file) {
             throw new BadRequestException('File is required');
         }
@@ -25,9 +27,11 @@ export class ExhibitsService {
             {
                 imageUrl,
                 description,
-                userId
+                userId: user.id
             }
-        )
+        );
+        this.sendNewPostNotification(description, user.username);
+
         return this.exhibitsRepository.save(exhibit);
     }
 
@@ -84,5 +88,8 @@ export class ExhibitsService {
             page,
             lastPage: Math.ceil(total / limit)
         }
+    }
+    private sendNewPostNotification(message: string, user: string) {
+        this.notificationService.handleNewPost({ message, user });
     }
 }

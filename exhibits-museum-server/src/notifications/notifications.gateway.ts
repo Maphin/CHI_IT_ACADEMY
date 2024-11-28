@@ -25,6 +25,7 @@ export class NotificationsGateway implements OnGatewayInit, OnGatewayConnection,
 
     @SubscribeMessage('newPost')
     handleNewPost(@MessageBody() data: { message: string, user: string }) {
+        console.log(data);
         this.server.emit('newPost', data);
     }
 }

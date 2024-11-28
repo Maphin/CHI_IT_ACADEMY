@@ -6,6 +6,7 @@ import { Exhibit } from './exhibits.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from 'src/users/users.module';
 import { FileService } from 'src/file/file.service';
+import { NotificationsGateway } from 'src/notifications/notifications.gateway';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { FileService } from 'src/file/file.service';
     UsersModule,
   ],
   controllers: [ExhibitsController],
-  providers: [ExhibitsService, JwtAuthGuard, FileService],
+  providers: [ExhibitsService, JwtAuthGuard, FileService, NotificationsGateway],
   exports: [ExhibitsService]
 })
 export class ExhibitsModule {}
