@@ -5,15 +5,16 @@ import Comment from "./Comment";
 
 interface CommentListProps {
   comments: IComment[] | null;
+  exhibitID: number;
   onCommentDelete: () => void;
 }
 
-const CommentList: React.FC<CommentListProps> = ({ comments, onCommentDelete }) => {
+const CommentList: React.FC<CommentListProps> = ({ comments, exhibitID, onCommentDelete }) => {
   return (
     <>
       {comments && comments.length > 0 ? (
         comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} onCommentDelete={onCommentDelete}/>
+          <Comment key={comment.id} comment={comment} exhibitID={exhibitID} onCommentDelete={onCommentDelete}/>
         ))
       ) : (
         <Typography variant="body2" color="textSecondary">

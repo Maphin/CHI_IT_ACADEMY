@@ -24,14 +24,15 @@ const StyledComment = styled(Box)({
 
 interface CommentProps {
   comment: IComment;
+  exhibitID: number;
   onCommentDelete: () => void;
 }
 
-const Comment: React.FC<CommentProps> = ({ comment, onCommentDelete }) => {
+const Comment: React.FC<CommentProps> = ({ comment, exhibitID, onCommentDelete }) => {
   const userId = useSelector((state: RootState) => state.user.user?.id);
 
   const { run: removeComment, loading } = useRequest(
-    async () => CommentsAPI.deleteComment(comment.id),
+    async () => CommentsAPI.deleteComment(comment.id, exhibitID),
     {
       manual: true,
       onSuccess: () => {

@@ -10,8 +10,8 @@ export const CommentsAPI = {
         const url = `/api/exhibits/${exhibitID}/comments`;
         return await axiosInstance.post(url, {text});
     },
-    async deleteComment(commentID: number) {
-        const url = `/api/exhibits/exhibitID/comments/${commentID}`;
+    async deleteComment(commentID: number, exhibitID: number) {
+        const url = `/api/exhibits/${exhibitID}/comments/${commentID}`;
         return await axiosInstance.delete(url);
     }
 }

@@ -101,7 +101,7 @@ const Exhibit: React.FC<ExhibitProps> = ({ exhibit, loadExhibits }) => {
           />
 
         <Collapse in={expanded} timeout="auto" unmountOnExit sx={{ mt: 2 }}>
-          <CommentList comments={comments} onCommentDelete={loadComments}/>
+          <CommentList comments={comments} onCommentDelete={loadComments} exhibitID={exhibit.id}/>
         </Collapse>
 
         {showAddComment && <AddCommentForm exhibitID={exhibit.id} onSuccess={onCommentAdd} isAuthenticated={isAuthenticated}/>}
